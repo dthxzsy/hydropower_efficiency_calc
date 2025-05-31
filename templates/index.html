@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Excel Processing Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .progress-container {
+            width: 50%;
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
+            margin-top: 20px;
+            display: none;
+        }
+        .progress-bar {
+            width: 0%;
+            height: 30px;
+            background-color: #4CAF50;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+</head>
+<body>
+    <h1>Excel Processing Tool</h1>
+    <button id="process-button">Start Processing</button>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar">0%</div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            const socket = io(); // 连接到 WebSocket 服务器
+            let processing = false;
+
+            $("#process-button").click(function() {
+                if (!processing) {
+                    processing = true;
+                    $(".progress-container").show();
+
+                    $.post("/process", function(data) {
+                        console.log("Processing started");
+                    });
+                }
+            });
+
+            socket.on('connect', function() {
+                console.log("Connected to server");
+            });
+
+            socket.on('progress', function(data) {
+                console.log("Progress: " + data.progress);
+                $("#progress-bar").width(data.progress + "%").text(data.progress + "%");
+            });
+
+            socket.on('complete', function(data) {
+                console.log("Complete: " + data.message);
+                alert(data.message);
+                $(".progress-container").hide();
+                processing = false;
+            });
+
+            socket.on('disconnect', function() {
+                console.log("Disconnected from server");
+                processing = false;
+            });
+        });
+    </script>
+</body>
+</html>
