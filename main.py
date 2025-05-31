@@ -10,16 +10,16 @@ save_path = r"C:\Users\Administrator\Desktop\Insert_Data_Workspace_\Reservoir\rs
 
 def main():
     if not os.path.exists(main_data_path):
-        print(f"❌ 数据文件不存在: {main_data_path}")
+        print(f" 数据文件不存在: {main_data_path}")
         return
     if not os.path.exists(template_path):
-        print(f"❌ 模板文件不存在: {template_path}")
+        print(f" 模板文件不存在: {template_path}")
         return
 
-    print("📥 读取数据中...")
+    print(" 读取数据中...")
     df = read_xls_to_df(main_data_path)
 
-    print("⚙️ 开始计算有效水位、效率和出库流量...")
+    print(" 开始计算有效水位、效率和出库流量...")
     df = calculate_values(df)
 
     print("📤 写入模板文件中...")
@@ -32,7 +32,7 @@ def main():
         columns=columns_to_write,
     )
 
-    print(f"✅ 处理完成，文件已保存至：{save_path}")
+    print(f" 处理完成，文件已保存至：{save_path}")
 
 if __name__ == "__main__":
     main()

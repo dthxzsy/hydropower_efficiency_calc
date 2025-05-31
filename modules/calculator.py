@@ -5,7 +5,7 @@ from .efficiency_data import power_efficiency_data
 from .interpolation import interpolate_efficiency
 
 
-# 🔽 数据读取函数
+#  数据读取函数
 def read_main_data(path):
     from .io_utils import read_xls_to_df  # 避免循环依赖，内部导入
     df = read_xls_to_df(path)
@@ -24,12 +24,12 @@ def read_main_data(path):
     return df
 
 
-# 🔽 获取水头基值
+# 获取水头基值
 def get_base_value(param):
     return base_values.get(param, np.nan)
 
 
-# 🔽 主计算逻辑
+#  主计算逻辑
 def calculate_values(df_main):
     # 防止字符串类型引起计算错误
     df_main["库上水位(m)"] = pd.to_numeric(df_main["库上水位(m)"], errors="coerce")
