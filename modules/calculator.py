@@ -15,10 +15,10 @@ def read_main_data(path):
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors="coerce")  # 转换为数值
         else:
-            print(f"⚠️ 警告：列 {col} 不存在，将填充 NaN")
+            print(f" 警告：列 {col} 不存在，将填充 NaN")
             df[col] = np.nan
 
-    print("📊 数据类型检查：")
+    print(" 数据类型检查：")
     print(df[["库上水位(m)", "发电功率", "参数"]].dtypes)
 
     return df

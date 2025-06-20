@@ -1,8 +1,10 @@
 import os
 import xlrd
+import xlwt  
 from xlutils.copy import copy
 import pandas as pd
 import numpy as np
+
 
 # 路径存在性检查
 def check_file_exists(path):
@@ -20,7 +22,6 @@ def read_xls_to_df(path):
     return df
 
 
-# 写入 DataFrame 到模板 Excel (.xls)，保留格式
 def write_to_template(template_path, save_path, df, start_row=1, start_col=0, columns=None):
     check_file_exists(template_path)
     rb = xlrd.open_workbook(template_path, formatting_info=True)
@@ -30,11 +31,17 @@ def write_to_template(template_path, save_path, df, start_row=1, start_col=0, co
     if columns is None:
         columns = df.columns.tolist()
 
-    # 写列名
+    # === 🔄 Round values in column F (6th column) ===
+    f_col_index = 5  # Index of column F (0-based)
+    if len(df.columns) > f_col_index:
+        col_name = df.columns[f_col_index]
+        df[col_name] = pd.to_numeric(df[col_name], errors='coerce').round(0)
+
+    # === 写列名 ===
     for c_idx, col_name in enumerate(columns):
         ws.write(start_row - 1, start_col + c_idx, col_name)
 
-    # 写数据
+    # === 写数据 ===
     for r_idx, row in enumerate(df[columns].values, start=start_row):
         for c_idx, val in enumerate(row):
             ws.write(r_idx, start_col + c_idx, "" if pd.isna(val) else val)
@@ -44,4 +51,4 @@ def write_to_template(template_path, save_path, df, start_row=1, start_col=0, co
 
     # 保存文件
     wb.save(save_path)
-    print(f" 数据已写入并保存到: {save_path}")
+    print(f"✅ 数据已写入并保存到: {save_path}")

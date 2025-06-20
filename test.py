@@ -7,7 +7,7 @@ from xlutils.copy import copy
 from flow_data import water_flow_dict  
 
 # 配置常量
-MAIN_PATH = r"C:\Users\Administrator\Desktop\Insert_Data_Workspace\Source_Data"
+MAIN_PATH = r"C:\Users\Administrator\Desktop\Insert_Data_Workspace_\Source_Data"
 REMOVE_SHEETS = [
     "61603780",
     "61603790",
@@ -29,9 +29,9 @@ FLOW_STATION = [
     "61608330",
 ]
 TEMPLATE_FILES = (
-    r"C:\Users\Administrator\Desktop\Insert_Data_Workspace\temp\Template Files.xls"
+    r"C:\Users\Administrator\Desktop\Insert_Data_Workspace_\temp\Template Files.xls"
 )
-OUTPUT_DIR = r"C:\Users\Administrator\Desktop\Insert_Data_Workspace\Water_Level"
+OUTPUT_DIR = r"C:\Users\Administrator\Desktop\Insert_Data_Workspace_\Water_Level"
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
